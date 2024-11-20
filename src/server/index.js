@@ -1,7 +1,8 @@
 import express from "express";
 import cors from "cors";
 import morgan from "morgan";
-import { userRouter} from "../routes/index.js";
+import { taskRouter, userRouter} from "../routes/index.js";
+import dbConnection from "../config/conn.js";
 
 class Server {
 
@@ -9,10 +10,14 @@ class Server {
         this.app = express();
         this.port = process.env.PORT;
 
+        this.connection();
         this.middlewares();
         this.routes();
     }
-
+    //dbConnection
+    async connection(){
+        await dbConnection();
+    }
     //middlewares and setting
     middlewares(){
         this.app.set("json spaces", 2)
@@ -25,6 +30,7 @@ class Server {
     //routes
     routes(){
         this.app.use("/api/user/", userRouter)
+        this.app.use("/api/tasks/", taskRouter)
     }
 
     //listen
