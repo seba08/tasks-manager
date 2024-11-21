@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { userAuth, userRegister } from "../controllers/user.js";
+import { forgotPassword, resetPassword, userAuth, userRegister } from "../controllers/user.js";
 import { body } from "express-validator";
 import { validarCampos } from "../middlewares/validarCampos.js";
 
@@ -14,6 +14,7 @@ userRouter.post("/register",
     body('password').isLength({min: 4}).withMessage("La contraseña debe tener al menos 4 caracteres"),
     validarCampos, 
     userRegister)
+
 userRouter.post("/auth",
     body('email').notEmpty().withMessage("El correo no puede estar vacío"),
     body('email').isEmail().withMessage("No es un correo válido"),
@@ -21,5 +22,10 @@ userRouter.post("/auth",
     body('password').isLength({min: 4}).withMessage("La contraseña debe tener al menos 4 caracteres"),
     validarCampos,
     userAuth)
+
+
+userRouter.post("/forgot-password", forgotPassword)
+
+userRouter.post("/reset-password", resetPassword)
 
 export default userRouter;
