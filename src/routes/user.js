@@ -24,7 +24,7 @@ userRouter.post("/auth",
     userAuth)
 
 
-userRouter.post("/forgot-password", forgotPassword)
+userRouter.post("/forgot-password",  forgotPassword)
 
 userRouter.post("/reset-password", resetPassword)
 

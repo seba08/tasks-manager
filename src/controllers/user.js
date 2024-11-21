@@ -106,7 +106,7 @@ const forgotPassword = async (req, res) => {
         const token = generarJWTTemporal(user.id)
 
         //Enviar correo con el enlace de recuperacion
-        const resetLink = `http://localhost:8080/api/reset-password/${token}`
+        const resetLink = `http://localhost:8080/api/user/reset-password/?token=${token}`
 
         await sendMail(
             user.email,
