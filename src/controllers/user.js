@@ -1,5 +1,5 @@
-import jwt from "jsonwebtoken";
 import { USERS } from "../models/index.js"
+import generarJWT from "../helpers/generarJWT.js";
 
 
 //User Register
@@ -58,7 +58,7 @@ const userAuth = async (req, res) => {
 
 
         //Generar JWT
-        const token = jwt.sign({id: userExist._id}, "misecreto", {expiresIn: "1h"})
+        const token = generarJWT(userExist.id)
 
         //Login
         res.status(200).json({
