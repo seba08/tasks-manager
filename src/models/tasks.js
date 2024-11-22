@@ -28,7 +28,7 @@ const taskSchema = new Schema(
       required: false,
     },
     user: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: 'User', // Relación con el modelo de usuario
       required: true,
     },
@@ -46,4 +46,4 @@ const taskSchema = new Schema(
   }
 );
 
-module.exports = model('Task', taskSchema);
+export const TASKS = model('Task', taskSchema);

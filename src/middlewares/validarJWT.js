@@ -6,8 +6,6 @@ import jwt from "jsonwebtoken";
 
 const validarJWT = async (req = request, res, next) => {
 
-
-
     try {
         const token = req.header("x-token")
         if(!token){
