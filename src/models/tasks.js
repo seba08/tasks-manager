@@ -29,7 +29,7 @@ const taskSchema = new Schema(
     },
     user: {
       type: Schema.Types.ObjectId,
-      ref: 'User', // Relación con el modelo de usuario
+      ref: 'user', // Relación con el modelo de usuario
       required: true,
     },
     createdAt: {

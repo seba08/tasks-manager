@@ -57,10 +57,11 @@ const userAuth = async (req, res) => {
                 console.log(res)
                 return res.status(401).json({msg: "Usuario incorrecto...!"})
             }else{
-
+                
                 //Generar JWT
-                const token = generarJWT(userExist.id)
-    
+                const token = generarJWT(userExist.id, userExist.role)
+                
+                console.log("Usuario logueado: ", userExist)
                 //Login
                 res.status(200).json({
                     msg: "Logueado",

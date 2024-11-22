@@ -2,18 +2,13 @@ import { Router } from "express";
 import { body, param } from "express-validator";
 import { validarCampos } from "../middlewares/validarCampos.js";
 import { validarJWT } from "../middlewares/validarJWT.js";
-import { addTask, updateTask } from "../controllers/tasks.js";
+import { addTask, deleteTask, getTasks, updateTask } from "../controllers/tasks.js";
 
 
 const taskRouter = Router();
 
 
-taskRouter.get("/", validarJWT, (req, res) => {
-    console.log(req.user.id)
-    res.status(200).json({
-        msg: "Getting tasks"
-    })
-})
+taskRouter.get("/", validarJWT, getTasks)
 
 taskRouter.post("/add", 
     validarJWT, 
@@ -29,10 +24,8 @@ taskRouter.put("/:id",
     validarCampos,
     updateTask)
 
-taskRouter.delete("/:id", (req, res) => {
-    res.status(201).json({
-        msg: "Deleting task"
-    })
-})
+taskRouter.delete("/:id", 
+    validarJWT, 
+    deleteTask)
 
 export default taskRouter;
