@@ -1,10 +1,10 @@
-import { request } from "express";
+import { request, response } from "express";
 import jwt from "jsonwebtoken";
 
 
 
 
-const validarJWT = async (req = request, res, next) => {
+const validarJWT = async (req = request, res = response, next) => {
 
     try {
         const token = req.header("x-token")

@@ -40,6 +40,7 @@ const userRegister = async (req, res) => {
 const userAuth = async (req, res) => {
 
     const {email, password} = req.body;
+    console.log(email, password)
 
     try {
         //Validar que el correo existe en la base de datos
@@ -54,7 +55,6 @@ const userAuth = async (req, res) => {
         userExist.comparePassword(password)
         .then(response => {
             if(!response){
-                console.log(res)
                 return res.status(401).json({msg: "Usuario incorrecto...!"})
             }else{
                 

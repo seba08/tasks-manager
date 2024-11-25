@@ -1,13 +1,47 @@
 import { request, response } from "express"
 import { TASKS, USERS } from "../models/index.js"
 
-const getTasks = async (req, res) =>{
-    const tasks = await TASKS.find().populate({path: "user", select: "name"})
-    const total = await TASKS.countDocuments();
-    res.status(200).json({
-        total,
-        tasks
-    })
+
+const getTask = async (req, res) => {
+
+    const id = req.params.id;
+
+    try {
+        const task = await TASKS.findById(id)
+        if(!task){
+            return res.status(401).json({
+                msg: `La tarea con ID: ${id} no existe en la BD.`
+            })
+        }
+        res.status(200).json({
+            task
+        })
+        
+    } catch (error) {
+        console.log(error)
+        res.sendStatus(401);
+    }
+
+}
+
+const getTasks = async (req, res = response) =>{
+  
+    try {
+        const tasks = await TASKS.find().populate({path: "user", select: "name"})
+        const total = await TASKS.countDocuments();
+      /*   if(!tasks){
+            return res.status(401).json({
+                msg: "Debes estar registrado para poder ver las tareas..."
+            })
+        } */
+        res.status(200).json({
+            total,
+            tasks
+        })
+        
+    } catch (error) {
+        res.sendStatus(401);
+    }
 }
 
 
@@ -47,6 +81,7 @@ const updateTask = async (req = request, res = response) =>{
 
         const updateTask = await TASKS.findByIdAndUpdate(id, {...req.body, 'user': req.user.id}, {new: true})
         updateTask.save();
+        console.log("Lo que viene del front: ", updateTask)
         res.status(200).json({
             msg: "Updated task",
             updateTask
@@ -92,6 +127,7 @@ const deleteTask = async (req, res) => {
 
 
 export {
+    getTask,
     getTasks,
     addTask,
     updateTask,

@@ -2,12 +2,16 @@ import { Router } from "express";
 import { body, param } from "express-validator";
 import { validarCampos } from "../middlewares/validarCampos.js";
 import { validarJWT } from "../middlewares/validarJWT.js";
-import { addTask, deleteTask, getTasks, updateTask } from "../controllers/tasks.js";
+import { addTask, deleteTask, getTask, getTasks, updateTask } from "../controllers/tasks.js";
 
 
 const taskRouter = Router();
 
-
+taskRouter.get("/:id",
+    validarJWT,
+param("id").isMongoId().withMessage("No es un ID  de mongo válido"),
+validarCampos,    
+getTask)
 taskRouter.get("/", validarJWT, getTasks)
 
 taskRouter.post("/add", 
